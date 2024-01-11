@@ -19,7 +19,7 @@ template <typename T>
 Queue<T> queue()
 {
    Queue<T>* q = new Queue<T>;
-   q->info = T(); // Valor por defecto de T
+   q->info = T();
    q->sig = NULL;
    q->len = 0;
    q->curr = 0;
