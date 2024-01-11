@@ -19,14 +19,14 @@ template <typename T>
 Stack<T> stack()
 {
    Stack<T> st = new Stack<T>;
-   st->info = T(); // Valor por defecto de T
+   st->info = T(); 
    st->sig = NULL;
    st->len = 0;
    st->curr = 0;
    return st;
 }
 
-// Función para agregar un elemento a la pila
+// Function to add an element to the stack
 template <typename T>
 T* stackPush(Stack<T>& st, T e)
 {
@@ -34,7 +34,7 @@ T* stackPush(Stack<T>& st, T e)
    return addFirst(st,e);
 }
 
-// Función para eliminar un elemento de la pila
+// Function to remove an element from the stack
 template <typename T>
 T stackPop(Stack<T>& st)
 {
@@ -43,14 +43,14 @@ T stackPop(Stack<T>& st)
    return removeFirst(st);
 }
 
-// Función para verificar si la pila está vacía
+// Function to check if the stack is empty
 template <typename T>
 bool stackIsEmpty(Stack<T> st)
 {
    return isEmpty(st);
 }
 
-// Función para obtener el tamaño de la pila
+// Function to get stack size
 template <typename T>
 int stackSize(Stack<T> st)
 {
