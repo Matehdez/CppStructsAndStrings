@@ -21,7 +21,6 @@ Array<T> array()
 {
    Array<T> a;
 
-   //new arr= direcci�n otorgada por la UC
    a.arr = new T[1];
    a.len = 0;
    a.cap = 1;
@@ -29,7 +28,7 @@ Array<T> array()
    return a;
 }
 
-// Agrega un elemento al final del array
+// Add an element to the end of the array
 template <typename T>
 int arrayAdd(Array<T>& a, T t)
 {
@@ -37,7 +36,7 @@ int arrayAdd(Array<T>& a, T t)
    return add<T>(a.arr,a.len,t);
 }
 
-// Obtiene el elemento en la posici�n p
+// Gets the element at position p
 template <typename T>
 T* arrayGet(Array<T> a, int p)
 {
@@ -46,7 +45,7 @@ T* arrayGet(Array<T> a, int p)
    return d;
 }
 
-// Establece el valor del elemento en la posici�n p
+// Sets the value of the element at position p
 template <typename T>
 void arraySet(Array<T>& a, int p, T t)
 {
@@ -55,7 +54,7 @@ void arraySet(Array<T>& a, int p, T t)
 
 }
 
-// Inserta un elemento en la posici�n p
+// Inserts an element at position p
 template <typename T>
 void arrayInsert(Array<T>& a, T t, int p)
 {
@@ -63,14 +62,14 @@ void arrayInsert(Array<T>& a, T t, int p)
    insert<T>(a.arr,a.len,t,p);
 }
 
-// Devuelve el tama�o del array
+// Returns the size of the array
 template <typename T>
 int arraySize(Array<T> a)
 {
    return a.len;
 }
 
-// Elimina el elemento en la posici�n p
+// Delete the element at position p
 template <typename T>
 T arrayRemove(Array<T>& a, int p)
 {
@@ -78,21 +77,21 @@ T arrayRemove(Array<T>& a, int p)
    return remove<T>(a.arr,a.len,p);
 }
 
-// Elimina todos los elementos del array
+// Remove all elements from the array
 template <typename T>
 void arrayRemoveAll(Array<T>& a)
 {
    a.len = 0;
 }
 
-// Busca un elemento en el array
+// Search for an element in the array
 template <typename T, typename K>
 int arrayFind(Array<T> a, K k, int cmpTK(T, K))
 {
    return find<T>(a.arr,a.len,k,cmpTK);
 }
 
-// Inserta un elemento en el array de forma ordenada
+// Insert an element into the array in an orderly manner
 template <typename T>
 int arrayOrderedInsert(Array<T>& a, T t, int cmpTT(T, T))
 {
@@ -100,14 +99,14 @@ int arrayOrderedInsert(Array<T>& a, T t, int cmpTT(T, T))
    return orderedInsert<T>(a.arr,a.len,t,cmpTT);
 }
 
-// Ordena el array
+// Sort the array
 template <typename T>
 void arraySort(Array<T>& a, int cmpTT(T, T))
 {
    sort<T>(a.arr,a.len,cmpTT);
 }
 
-// Busca un elemento en el array y si no lo encuentra lo agrega al final
+// Searches for an element in the array and if it is not found, adds it to the end
 template <typename T>
 T* arrayDiscover(Array<T>& a, T t, int (*cmpTT)(T, T)) {
     for (int i = 0; i < a.len; i++) {
@@ -115,7 +114,7 @@ T* arrayDiscover(Array<T>& a, T t, int (*cmpTT)(T, T)) {
             return &a.arr[i];
         }
     }
-    // Si no se encuentra el elemento, se agrega al final del array.
+    // If the element is not found, it is added to the end of the array.
     a.len++;
     a.arr = (T*)realloc(a.arr, a.len * sizeof(T));
     a.arr[a.len - 1] = t;
