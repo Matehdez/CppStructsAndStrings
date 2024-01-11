@@ -3,15 +3,15 @@
 
 #include <iostream>
 
-// Redimensiona el array
+// Resize the array
 template <typename T>
-void redimention ( T*& a, int len, int nuevaCapacidad ){
-T* nuevoArr = new int [nuevaCapacidad]; // new crea espacio enmemoria
+void redimention ( T*& a, int len, int newCap ){
+T* newArr = new int [newCap]; 
 for ( int i = 0; i<len; i++){
-nuevoArr[i] = a[i];
+newArr[i] = a[i];
 }
-delete[] a; //deja espacio para nuevo array
-a= nuevoArr;
+delete[] a; 
+a= newArr;
 }
 
 template <typename T>
