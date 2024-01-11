@@ -26,7 +26,7 @@ Queue<T> queue()
    return q;
 }
 
-// Función para agregar un elemento a la cola
+// Function to add an element to the queue
 template <typename T>
 T* queueEnqueue(Queue<T>& q, T e)
 {
@@ -34,7 +34,7 @@ T* queueEnqueue(Queue<T>& q, T e)
    return enqueue(q,e);
 }
 
-// Función para eliminar un elemento de la cola
+// Function to remove an element from the queue
 template <typename T>
 T queueDequeue(Queue<T>& q)
 {
@@ -43,14 +43,14 @@ T queueDequeue(Queue<T>& q)
    return dequeue(q);
 }
 
-// Función para verificar si la cola está vacía
+// Function to check if the queue is empty
 template <typename T>
 bool queueIsEmpty(Queue<T> q)
 {
    return isEmpty(q);
 }
 
-// Función para obtener el tamaño de la cola
+// Function to get queue size
 template <typename T>
 int queueSize(Queue<T> q)
 {
