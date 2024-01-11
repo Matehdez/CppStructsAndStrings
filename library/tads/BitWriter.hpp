@@ -15,7 +15,6 @@ struct BitWriter
    FILE bFile;
 };
 
-// Crea e inicializa una variable tipo BitWriter.
 BitWriter bitWriter(FILE* f)
 {
    BitWriter bw;
@@ -24,7 +23,7 @@ BitWriter bitWriter(FILE* f)
    return bw;
 }
 
-// Graba un bit en el archivo.
+// Write a bit to the file.
 void bitWriterWrite(BitWriter &bw, int bit)
 {
    bw.bString += intToChar(bit);
@@ -36,7 +35,7 @@ void bitWriterWrite(BitWriter &bw, int bit)
    }
 }
 
-// Graba en el archivo los unos y ceros que contiene bits.
+// Records the ones and zeros that contain bits into the file.
 void bitWriterWrite(BitWriter &bw, string sbit)
 {
    bw.bString += sbit;
@@ -49,8 +48,8 @@ void bitWriterWrite(BitWriter &bw, string sbit)
    }
 }
 
-//Indica que ya no se grabarán más bit. En caso de que la cantidad de bit
-//que grabamos no sea múltiplo de 8, completa con ceros a la derecha y graba./
+//Indicates that no more bits will be recorded. In case the bit amount
+//that we record is not a multiple of 8, complete with zeros on the right and record./
 void bitWriterFlush(BitWriter &bw)
 {
    if( length(bw.bString)<8&&length(bw.bString)!=0 )
