@@ -15,12 +15,12 @@ struct List
    int curr;
 };
 
-// Crea una nueva lista
+// Create a new list
 template <typename T>
 List<T>* list()
 {
    List<T>* lst = new List<T>;
-   lst->info = T(); // Valor por defecto de T
+   lst->info = T(); 
    lst->sig = NULL;
    lst->len = 0;
    lst->curr = 0;
@@ -28,7 +28,7 @@ List<T>* list()
    return lst;
 }
 
-// Agrega un elemento al final de la lista
+// Add an element to the end of the list
 template <typename T>
 T* listAdd(List<T>& lst, T e)
 {
@@ -36,7 +36,7 @@ T* listAdd(List<T>& lst, T e)
    return add<T>(lst,e);
 }
 
-// Agrega un elemento al inicio de la lista
+// Add an item to the top of the list
 template <typename T>
 T* listAddFirst(List<T>& lst, T e)
 {
@@ -44,7 +44,7 @@ T* listAddFirst(List<T>& lst, T e)
    return addFirst<T>(lst,e);
 }
 
-// Elimina un elemento de la lista basado en una clave
+// Remove an item from the list based on a key
 template <typename T, typename K>
 T listRemove(List<T>& lst, K k, int cmpTK(T, K))
 {
@@ -63,7 +63,7 @@ T listRemove(List<T>& lst, K k, int cmpTK(T, K))
    }
 }
 
-// Elimina el primer elemento de la lista
+// Delete the first item in the list
 template <typename T>
 T listRemoveFirst(List<T>& lst)
 {
@@ -80,7 +80,7 @@ T listRemoveFirst(List<T>& lst)
    }
 }
 
-// Busca un elemento en la lista basado en una clave
+// Search for an item in the list based on a key
 template <typename T, typename K>
 T* listFind(List<T> lst, K k, int cmpTK(T, K))
 {
@@ -95,14 +95,14 @@ T* listFind(List<T> lst, K k, int cmpTK(T, K))
    }
 }
 
-// Verifica si la lista está vacía
+// Check if the list is empty
 template <typename T>
 bool listIsEmpty(List<T> lst)
 {
    return isEmpty<T>(lst);
 }
 
-// Devuelve el tamaño de la lista
+// Returns the size of the list
 template <typename T>
 int listSize(List<T>* lst)
 {
@@ -117,7 +117,7 @@ int listSize(List<T>* lst)
    return lst->len = i;
 }
 
-// Libera la memoria ocupada por la lista
+// Release the memory occupied by the list
 template <typename T>
 void listFree(List<T>& lst)
 {
@@ -125,7 +125,7 @@ void listFree(List<T>& lst)
    free<T>(lst);
 }
 
-//descubre e inserta si no está
+//discover and insert if not present
 template <typename T>
 T* listDiscover(List<T>& lst, T t, int cmpTT(T, T))
 {
@@ -138,12 +138,12 @@ T* listDiscover(List<T>& lst, T t, int cmpTT(T, T))
       }
       aux = lst->sig;
    }
-   // Si no se encuentra el elemento, se agrega al final del array.
+   // If the element is not found, it is added to the end of the array.
    lst->len++;
    return listAdd(lst,t);
 }
 
-// Inserta un elemento en la lista de forma ordenada
+// Insert an element into the list in order
 template <typename T>
 T* listOrderedInsert(List<T>& lst, T t, int cmpTT(T, T))
 {
@@ -152,21 +152,21 @@ T* listOrderedInsert(List<T>& lst, T t, int cmpTT(T, T))
 }
 
 
-// Ordena la lista
+// Sort the list
 template <typename T>
 void listSort(List<T>& lst, int cmpTT(T, T))
 {
    sort<T>(lst,cmpTT);
 }
 
-// Reinicia la posición actual de la lista al inicio
+// Resets the current position of the list to the beginning
 template <typename T>
 void listReset(List<T>& lst)
 {
    lst.curr = 0;
 }
 
-// Verifica si hay un siguiente elemento en la lista
+// Check if there is a next item in the list
 template <typename T>
 bool listHasNext(List<T> lst)
 {
@@ -181,7 +181,7 @@ bool listHasNext(List<T> lst)
    }
 }
 
-// Avanza a la siguiente posición en la lista y devuelve el elemento en esa posición
+// Moves to the next position in the list and returns the element at that position
 template <typename T>
 T* listNext(List<T>& lst)
 {
@@ -189,7 +189,7 @@ T* listNext(List<T>& lst)
    return lst;
 }
 
-// Avanza a la siguiente posición en la lista y devuelve el elemento en esa posición. También establece una bandera si se ha llegado al final de la lista.
+// Moves to the next position in the list and returns the element at that position. It also sets a flag if the end of the list has been reached.
 template <typename T>
 T* listNext(List<T>*& lst, bool& endOfList)
 {
