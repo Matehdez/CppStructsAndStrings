@@ -6,10 +6,12 @@
 
 using namespace std;
 
+// TAD Coll is a primitive version of what arrays do. Is more like to practice and get used to it ;)
+
 template <typename T>
 struct Coll
 {
-   //cadena tokenizada
+   //tokenized string
    string s;
    char sep;
    int curr;
