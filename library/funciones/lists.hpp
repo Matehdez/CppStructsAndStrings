@@ -56,8 +56,8 @@ Node<T>* addFirst(Node<T>*& p, T e)
 {
    Node<T>* nuevoNodo = new Node<T>;
    nuevoNodo->info = e;
-   nuevoNodo->sig = p; // le asigno la direccion hacia p
-   p = nuevoNodo; // cambio p para que comience apuntando a nuevoNodo
+   nuevoNodo->sig = p; 
+   p = nuevoNodo; 
    return nuevoNodo;
 }
 
@@ -70,7 +70,7 @@ T remove(Node<T>*& p, K k, int cmpTK(T, K))
    {
       if( cmpTK(aux->info,k)==0 )
       {
-         if( prev==NULL ) // Si es el primer nodo
+         if( prev==NULL ) // If it is the first node
          {
             p = aux->sig;
          }
@@ -109,7 +109,7 @@ Node<T>* find(Node<T>* p, K k, int cmpTK(T, K))
       }
       aux = aux->sig;
    }
-   return NULL; // Si no se encuentra el elemento, devuelve NULL
+   return NULL; // If the element is not found, returns NULL
 }
 
 template <typename T>
@@ -121,13 +121,13 @@ Node<T>* orderedInsert(Node<T>*& p, T e, int cmpTT(T, T))
 
    if( p==NULL||cmpTT(p->info,e)>0 )
    {
-      // Insertar al principio de la lista
+      // Insert to top of list
       nuevoNodo->sig = p;
       p = nuevoNodo;
    }
    else
    {
-      // Insertar en medio o al final de la lista
+      // Insert in the middle or at the end of the list
       Node<T>* aux = p;
       while( aux->sig!=NULL&&cmpTT(aux->sig->info,e)<0 )
       {
@@ -255,26 +255,26 @@ T dequeue(Node<T>*& p, Node<T>*& q)
 template <typename T>
 T dequeue(Node<T>*& q)
 {
-   if (q == NULL) // Si la cola está vacía, no podemos desencolar nada
+   if (q == NULL) // If the queue is empty, we cannot unqueue anything
    {
-      std::cout << "La cola está vacía, no se puede desencolar." << std::endl;
-      return T(); // Devuelve un valor por defecto de T
+      std::cout << "The queue is empty, it cannot be dequeued." << std::endl;
+      return T(); // Returns a default value of T
    }
 
-   Node<T>* temp = q->sig; // Nodo a desencolar (primer nodo en la cola)
-   T t = temp->info; // Valor a devolver
+   Node<T>* temp = q->sig; // Node to dequeue (first node in queue)
+   T t = temp->info; // Value to return
 
-   if (q->sig == q) // Si solo hay un nodo en la cola
+   if (q->sig == q) // If there is only one node in the queue
    {
-      q = NULL; // La cola se vuelve NULL después de desencolar el último nodo
+      q = NULL; // Queue becomes NULL after dequeuing last node
    }
    else
    {
-      q->sig = temp->sig; // El siguiente nodo del último nodo (q) se convierte en el primer nodo en la cola
+      q->sig = temp->sig; // The next node from the last node (q) becomes the first node in the queue
    }
 
-   delete temp; // Elimina el nodo desencolado
-   return t; // Devuelve el valor desencolado
+   delete temp; // Delete the dequeued node
+   return t; // Returns the dequeued value
 }
 
 #endif
