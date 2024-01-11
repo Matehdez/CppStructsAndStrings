@@ -21,7 +21,7 @@ BitReader bitReader(FILE *f)
    return br;
 }
 
-// Lee un bit desde el archivo.
+// Reads a bit from the file.
 int bitReaderRead(BitReader &br)
 {
    int byte = read<int>(br.brFile);
