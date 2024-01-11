@@ -27,7 +27,7 @@ Map<K, V> map()
    return m;
 }
 
-// Devuelve un puntero al valor asociado con la clave en el mapa.
+//Returns a pointer to the value associated with the key in the map.
 template <typename K, typename V>
 V* mapGet(Map<K, V> m, K k)
 {
@@ -43,23 +43,23 @@ V* mapGet(Map<K, V> m, K k)
    return dir;
 }
 
-// Inserta un par clave-valor en el mapa. Si la clave ya existe en el mapa, actualiza su valor.
+// Inserts a key-value pair into the map. If the key already exists in the map, it updates its value.
 template <typename K, typename V>
 V* mapPut(Map<K, V>& m, K k, V v)
 {
    V* dir = NULL;
    bool keyFound = false;
 
-   // Si el mapa no está vacío
+   // If the map is not empty
    if( m.ke.len!=0 )
    {
-      // Buscar la clave en el mapa
+      // Find the key on the map
       for( int i = 0; i<arraySize<K>(m.ke); i++ )
       {
-         // Si la clave se encuentra en el mapa
+         // If the key is found on the map
          if( k==m.ke.arr[i] )
          {
-            // Actualizar el valor asociado a la clave
+            // Update the value associated with the key
             arraySet<V>(m.va,i,v);
             dir = &(m.va.arr[i]);
             keyFound = true;
@@ -68,10 +68,10 @@ V* mapPut(Map<K, V>& m, K k, V v)
       }
    }
 
-   // Si la clave no se encuentra en el mapa
+   // If the key is not found on the map
    if( !keyFound )
    {
-      // Añadir la nueva clave y valor al mapa
+      // Add the new key and value to the map
       int add = arrayAdd<K>(m.ke,k);
       arrayAdd<V>(m.va,v);
       dir = &(m.va.arr[add]);
@@ -80,7 +80,7 @@ V* mapPut(Map<K, V>& m, K k, V v)
    return dir;
 }
 
-// Comprueba si una clave está presente en el mapa.
+// Checks if a key is present on the map.
 template <typename K, typename V>
 bool mapContains(Map<K, V> m, K k)
 {
@@ -94,7 +94,7 @@ bool mapContains(Map<K, V> m, K k)
    return false;
 }
 
-// Elimina una clave y su valor asociado del mapa.
+// Removes a key and its associated value from the map.
 template <typename K, typename V>
 V mapRemove(Map<K, V>& m, K k)
 {
@@ -119,7 +119,7 @@ V mapRemove(Map<K, V>& m, K k)
    return v;
 }
 
-// Elimina todas las claves y valores del mapa.
+// Removes all keys and values â€‹â€‹from the map.
 template <typename K, typename V>
 void mapRemoveAll(Map<K, V>& m)
 {
@@ -127,21 +127,21 @@ void mapRemoveAll(Map<K, V>& m)
    arrayRemoveAll<V>(m.va);
 }
 
-// Devuelve el número de elementos en el mapa.
+// Returns the number of elements in the map.
 template <typename K, typename V>
 int mapSize(Map<K, V> m)
 {
    return arraySize<V>(m.va);
 }
 
-// Comprueba si hay más elementos en el mapa para iterar.
+// Checks if there are more elements in the map to iterate.
 template <typename K, typename V>
 bool mapHasNext(Map<K, V> m)
 {
    return m.num<arraySize(m.va);
 }
 
-// Devuelve la siguiente clave en la iteración del mapa.
+// Returns the next key in the map iteration.
 template <typename K, typename V>
 K mapNextKey(Map<K, V>& m)
 {
@@ -153,7 +153,7 @@ K mapNextKey(Map<K, V>& m)
    return *k;
 }
 
-// Devuelve el siguiente valor en la iteración del mapa.
+// Returns the next value in the map iteration.
 template <typename K, typename V>
 V* mapNextValue(Map<K, V>& m)
 {
@@ -165,7 +165,7 @@ V* mapNextValue(Map<K, V>& m)
    return dir;
 }
 
-// Reinicia la iteración del mapa al principio.
+// Restart the map iteration at the beginning.
 template <typename K, typename V>
 void mapReset(Map<K, V>& m)
 {
@@ -174,7 +174,7 @@ void mapReset(Map<K, V>& m)
 
 
 
-// Ordena los elementos del mapa por sus claves utilizando una función de comparación proporcionada.
+// Sorts map elements by their keys using a provided compare function.
 template <typename K, typename V>
 void mapSortByKeys(Map<K, V>& m, int cmpKK(K, K))
 {
@@ -203,7 +203,7 @@ void mapSortByKeys(Map<K, V>& m, int cmpKK(K, K))
    m.va = vAux;
 }
 
-// Ordena los elementos del mapa por sus valores utilizando una función de comparación proporcionada.
+// Sorts map elements by their values â€‹â€‹using a provided comparison function.
 template <typename K, typename V>
 void mapSortByValues(Map<K, V>& m, int cmpVV(V, V))
 {
@@ -232,7 +232,7 @@ void mapSortByValues(Map<K, V>& m, int cmpVV(V, V))
    m.ke = kAux;
 }
 
-// Si la clave no está en el mapa, inserta el par clave-valor y devuelve un puntero al valor. Si la clave ya está en el mapa, devuelve un puntero al valor existente.
+// If the key is not in the map, inserts the key-value pair and returns a pointer to the value. If the key is already in the map, it returns a pointer to the existing value.
 template <typename K, typename V>
 V* mapDiscover(Map<K, V>& m, K k, V v)
 {
