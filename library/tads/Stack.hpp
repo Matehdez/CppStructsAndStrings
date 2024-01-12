@@ -9,59 +9,49 @@ using namespace std;
 template <typename T>
 struct Stack
 {
-   T info;
-   Stack* sig;
-   int len;
-   int curr;
+   Node<T> *p; // primer Nodo
+   int pos;    // posicion actual
+   int length;
 };
 
 template <typename T>
 Stack<T> stack()
 {
-   Stack<T> st = new Stack<T>;
-   st->info = T(); 
-   st->sig = NULL;
-   st->len = 0;
-   st->curr = 0;
+   Stack<T> st;
+   st.p = NULL;
+   st.pos = 0;
+   st.length = 0;
    return st;
 }
-
-// Function to add an element to the stack
+/*push Retorna: Node<T>* – Dirección del nodo que contiene al elemento que se agregó.
+ */
+/*Retorna: T* – Dirección de memoria del elemento que se apiló.
+ */
 template <typename T>
-T* stackPush(Stack<T>& st, T e)
+Node<T> *stackPush(Stack<T> &st, T e)
 {
-   st->len++;
-   return addFirst(st,e);
+   st.length++;
+   return push<T>(st.p, e);
 }
 
-// Function to remove an element from the stack
 template <typename T>
-T stackPop(Stack<T>& st)
+T stackPop(Stack<T> &st)
 {
-   T t;
-   st->len--;
-   return removeFirst(st);
+   T t = pop<T>(st.p);
+   st.length--;
+   return t;
 }
 
-// Function to check if the stack is empty
 template <typename T>
 bool stackIsEmpty(Stack<T> st)
 {
-   return isEmpty(st);
+   return st.p == NULL;
 }
 
-// Function to get stack size
 template <typename T>
 int stackSize(Stack<T> st)
 {
-   int i = 0;
-   Stack<T>* aux = st;
-   while( aux!=NULL )
-   {
-      i++;
-      aux = aux->sig;
-   }
-   return i;
+   return st.length;
 }
 
 #endif
