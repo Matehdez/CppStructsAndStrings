@@ -7,56 +7,56 @@
 using namespace std;
 
 template <typename T>
-struct Stack
+struct Queue
 {
-   Node<T>* sta;
+   Node<T>* que;
    int len;
 };
 
 template <typename T>
-Stack<T> stack()
+Queue<T> queue()
 {
-   Stack<T> st;
-   st.sta = NULL;
-   st.len = 0;
-   return st;
+   Queue<T> q;
+   q.que = NULL;
+   q.len = 0;
+   return q;
 }
 
 // Adds an element
 template <typename T>
-T* stackPush(Stack<T>& st, T e)
+T* queueEnqueue(Queue<T>& q, T e)
 {
-   st.len++;
-   return &push(st.sta,e)->info;
+   q.len++;
+   return &enqueue(q.que,e)->info;
 }
 
-// Deletes an element
+ // Deletes an element
 template <typename T>
-T stackPop(Stack<T>& st)
+T queueDequeue(Queue<T>& q)
 {
-   st.len--;
-   return removeFirst(st.sta);
+   q.len--;
+   return dequeue(q.que);
 }
 
 // Checks if the List is empty
 template <typename T>
-bool stackIsEmpty(Stack<T> st)
+bool queueIsEmpty(Queue<T> q)
 {
-   return isEmpty(st.sta);
+   return isEmpty(q.que);
 }
 
-// Obtains List´s size
+// Gets List´s size
 template <typename T>
-int stackSize(Stack<T> st)
+int queueSize(Queue<T> q)
 {
    int i = 0;
-   Stack<T>* aux = st.sta;
+   Queue<T>* aux = q.que;
    while( aux!=NULL )
    {
       i++;
       aux = aux->sig;
    }
-   return st.len = i;
+   return q.len = i;
 }
 
 #endif
