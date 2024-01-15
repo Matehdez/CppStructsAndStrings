@@ -9,49 +9,54 @@ using namespace std;
 template <typename T>
 struct Stack
 {
-   Node<T> *p; // primer Nodo
-   int pos;    // posicion actual
-   int length;
+   Node<T>* sta;
+   int len;
 };
 
 template <typename T>
 Stack<T> stack()
 {
    Stack<T> st;
-   st.p = NULL;
-   st.pos = 0;
-   st.length = 0;
+   st.sta = NULL;
+   st.len = 0;
    return st;
 }
-/*push Retorna: Node<T>* – Dirección del nodo que contiene al elemento que se agregó.
- */
-/*Retorna: T* – Dirección de memoria del elemento que se apiló.
- */
+
+// Adds an element
 template <typename T>
-Node<T> *stackPush(Stack<T> &st, T e)
+T* stackPush(Stack<T>& st, T e)
 {
-   st.length++;
-   return push<T>(st.p, e);
+   st.len++;
+   return &push(st.sta,e)->info;
 }
 
+// Deletes an element
 template <typename T>
-T stackPop(Stack<T> &st)
+T stackPop(Stack<T>& st)
 {
-   T t = pop<T>(st.p);
-   st.length--;
-   return t;
+   st.len--;
+   return removeFirst(st.sta);
 }
 
+// Checks if the List is empty
 template <typename T>
 bool stackIsEmpty(Stack<T> st)
 {
-   return st.p == NULL;
+   return isEmpty(st.sta);
 }
 
+// Obtains List´s size
 template <typename T>
 int stackSize(Stack<T> st)
 {
-   return st.length;
+   int i = 0;
+   Stack<T>* aux = st.sta;
+   while( aux!=NULL )
+   {
+      i++;
+      aux = aux->sig;
+   }
+   return st.len = i;
 }
 
 #endif
