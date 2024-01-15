@@ -17,12 +17,12 @@ int cmpInt(int a, int b)
 }
 
 template <typename T>
-void show(Node<T>*& p)
+void display(Node<T>*& p)
 {
    Node<T>* aux = p;
    while( aux!=NULL )
    {
-      cout<<aux->info<<"";
+      cout<<aux->info<<" ";
       aux = aux->sig;
    }
 }
@@ -30,7 +30,7 @@ void show(Node<T>*& p)
 template <typename T>
 Node<T>* add(Node<T>*& p, T e)
 {
-   Node<T>* nuevoNodo = new Node<T>;
+   Node<T>* nuevoNodo = new Node<T>();
    nuevoNodo->info = e;
    nuevoNodo->sig = NULL;
 
@@ -56,8 +56,8 @@ Node<T>* addFirst(Node<T>*& p, T e)
 {
    Node<T>* nuevoNodo = new Node<T>;
    nuevoNodo->info = e;
-   nuevoNodo->sig = p; 
-   p = nuevoNodo; 
+   nuevoNodo->sig = p; // assign direction to p
+   p = nuevoNodo; // change p to direction to nuevoNodo
    return nuevoNodo;
 }
 
@@ -66,11 +66,12 @@ T remove(Node<T>*& p, K k, int cmpTK(T, K))
 {
    Node<T>* aux = p;
    Node<T>* prev = NULL;
+
    while( aux!=NULL )
    {
       if( cmpTK(aux->info,k)==0 )
       {
-         if( prev==NULL ) // If it is the first node
+         if( prev==NULL ) // If is first node
          {
             p = aux->sig;
          }
@@ -78,23 +79,35 @@ T remove(Node<T>*& p, K k, int cmpTK(T, K))
          {
             prev->sig = aux->sig;
          }
-         T t = aux->info;
-         delete aux;
+         T t = aux->info; //element to be deleted
+         delete aux; //delete node
          return t;
       }
       prev = aux;
       aux = aux->sig;
    }
+
+   std:: cout << "Found no match to delete" <<std:: endl;
+   return T();// returns a default element
 }
 
 template <typename T>
 T removeFirst(Node<T>*& p)
 {
    Node<T>* aux = p;
-   p = aux->sig;
-   T t = aux->info;
-   delete aux;
-   return t;
+
+   if( p!=NULL )
+   {
+      p = aux->sig;
+      T t = aux->info;
+      delete aux;
+      return t;
+   }
+   else
+   {
+      std:: cout << "Node has no element to delete" <<std:: endl;
+      return T();
+   }
 }
 
 template <typename T, typename K>
@@ -109,7 +122,8 @@ Node<T>* find(Node<T>* p, K k, int cmpTK(T, K))
       }
       aux = aux->sig;
    }
-   return NULL; // If the element is not found, returns NULL
+   std::cout<<"Node is empty, cannot find any element"<<std::endl;
+   return NULL;
 }
 
 template <typename T>
@@ -121,13 +135,13 @@ Node<T>* orderedInsert(Node<T>*& p, T e, int cmpTT(T, T))
 
    if( p==NULL||cmpTT(p->info,e)>0 )
    {
-      // Insert to top of list
+      // Insert at the beggining of the list
       nuevoNodo->sig = p;
       p = nuevoNodo;
    }
    else
    {
-      // Insert in the middle or at the end of the list
+      // Insert at the middle or bottom of the list
       Node<T>* aux = p;
       while( aux->sig!=NULL&&cmpTT(aux->sig->info,e)<0 )
       {
@@ -201,12 +215,8 @@ bool isEmpty(Node<T>* p)
 template <typename T>
 void free(Node<T>*& p)
 {
-   while( p!=NULL )
-   {
-      Node<T>* aux = p->sig;
-      delete p;
-      p = aux;
-   }
+   delete p;
+   p = NULL;
 }
 
 template <typename T>
@@ -228,7 +238,7 @@ Node<T>* enqueue(Node<T>*& p, Node<T>*& q, T e)
 }
 
 template <typename T>
-Node<T>* enqueue(Node<T>*& q, T e) //sobrecarga
+Node<T>* enqueue(Node<T>*& q, T e) //overload
 {
    Node<T>* nuevo = new Node<T>();
    nuevo->info = e;
@@ -255,26 +265,26 @@ T dequeue(Node<T>*& p, Node<T>*& q)
 template <typename T>
 T dequeue(Node<T>*& q)
 {
-   if (q == NULL) // If the queue is empty, we cannot unqueue anything
+   if( q==NULL ) //If the queue is empty, we cannot unqueue anything
    {
-      std::cout << "The queue is empty, it cannot be dequeued." << std::endl;
-      return T(); // Returns a default value of T
+      std::cout<<"The queue is empty, it cannot be dequeued."<<std::endl;
+      return T();
    }
 
-   Node<T>* temp = q->sig; // Node to dequeue (first node in queue)
-   T t = temp->info; // Value to return
+   Node<T>* temp = q->sig;
+   T t = temp->info;
 
-   if (q->sig == q) // If there is only one node in the queue
+   if( q->sig==q )
    {
-      q = NULL; // Queue becomes NULL after dequeuing last node
+      q = NULL;
    }
    else
    {
-      q->sig = temp->sig; // The next node from the last node (q) becomes the first node in the queue
+      q->sig = temp->sig; //The next node from the last node (q) becomes the first node in the queue
    }
 
-   delete temp; // Delete the dequeued node
-   return t; // Returns the dequeued value
+   delete temp;
+   return t;
 }
 
 #endif
