@@ -3,57 +3,46 @@
 
 #include <iostream>
 
-// Resize the array
 template <typename T>
-void redimention ( T*& a, int len, int newCap ){
-T* newArr = new int [newCap]; 
-for ( int i = 0; i<len; i++){
-newArr[i] = a[i];
-}
-delete[] a; 
-a= newArr;
+int add(T arr[],int& len,T e)
+{
+   arr[len++] = e;
+   return len;
 }
 
 template <typename T>
-int add(T arr[], int& len, T e)
+void insert(T arr[],int& len,T e,int p)
 {
-   redimention(arr, len, len++);
-   arr[len] = e;
-   len++;
-   return len-1;;
-}
-
-template <typename T>
-void insert(T arr[], int& len, T e, int p)
-{
-   redimention(arr, len, len++);
-   for( int i = len; i>p; i-- )
+   T aux = arr[p];
+   arr[p++] = e;
+   while(p<len+1)
    {
-      arr[i] = arr[i-1];
+      e = aux;
+      aux = arr[p];
+      arr[p++]=e;
    }
-   arr[p] = e;
    len++;
 }
 
 template <typename T>
-T remove(T arr[], int& len, int p)
+T remove(T arr[],int& len,int p)
 {
-   // p = posicion
    T ret = arr[p];
-   for( int i = p+1; i<len; i++ )
+   while(p<len-1)
    {
-      arr[i-1] = arr[i];
+      arr[p] = arr[p+1];
+      p++;
    }
    len--;
    return ret;
 }
 
 template <typename T, typename K>
-int find(T arr[], int len, K k, int cmpTK(T, K))
+int find(T arr[],int len,K k,int cmpTK(T,K))
 {
-   for( int i = 0; i<len; i++ )
+   for(int i = 0; i<len; i++)
    {
-      if( cmpTK(arr[i],k)==0 )
+      if(cmpTK(arr[i],k)==0)
       {
          return i;
       }
@@ -62,38 +51,36 @@ int find(T arr[], int len, K k, int cmpTK(T, K))
 }
 
 template <typename T>
-int orderedInsert(T arr[], int& len, T e, int cmpTT(T, T))
+int orderedInsert(T arr[],int& len,T e,int cmpTT(T,T))
 {
-   int pos=0;
-
-
-   while (cmpTT(e,arr[pos])>0 && pos<len){
-      pos++;
-      }
-   insert <T>(arr, len, e, pos);
-   return pos;
+   int p = 0;
+   while(cmpTT(arr[p],e)<0)
+   {
+      p++;
    }
-
+   insert<T>(arr,len,e,p);
+   return p;
+}
 
 template <typename T>
-void sort(T arr[], int len, int cmpTT(T, T))
+void sort(T arr[],int len,int cmpTT(T,T))
 {
-   for( int i = 0; i<len; i++ )
+   bool seInvirtio=true;
+   while(seInvirtio)
    {
-      for( int h = i+1; h<len; h++ )
+      seInvirtio=false;
+      for(int i=1;i<len;i++)
       {
-         if( cmpTT(arr[i],arr[h])>0 )
+         if(cmpTT(arr[i],arr[i-1])<0)
          {
-            T temp = arr[i];
-            arr[i] = arr[h];
-            arr[h] = temp;
+            T aux = arr[i-1];
+            arr[i-1] = arr[i];
+            arr[i] = aux;
+            seInvirtio=true;
          }
-
       }
    }
 }
-
-
 
 
 
