@@ -26,6 +26,7 @@ List<T> list()
    return lst;
 }
 
+// Displays all elements in the list
 template <typename T>
 void listDisplay(List<T> lst)
 {
