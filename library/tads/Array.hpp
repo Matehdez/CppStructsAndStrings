@@ -7,120 +7,147 @@
 
 using namespace std;
 
-template <typename T>
+template<typename T>
 struct Array
 {
+   T* arr;
    int len;
    int cap;
-   int curr;
-   T* arr;
 };
 
-template <typename T>
+template<typename T>
 Array<T> array()
 {
    Array<T> a;
-
-   a.arr = new T[1];
-   a.len = 0;
-   a.cap = 1;
-   a.curr = 0;
+   T* p = new T[20];
+   a.arr = p;
+   a.len=0;
+   a.cap=20;
    return a;
 }
 
-// Add an element to the end of the array
-template <typename T>
-int arrayAdd(Array<T>& a, T t)
+//Redimentions array in order to manipulate it dynamically
+template<typename T>
+void arrayRedimention(Array<T>& a)
 {
-   a.len++;
-   return add<T>(a.arr,a.len,t);
+   T* nuevoArr = new T[a.cap+1];
+   for(int i=0;i<a.len;i++)
+   {
+      nuevoArr[i]=a.arr[i];
+   }
+   delete a.arr;
+   a.arr = nuevoArr;
+   a.cap++;   
 }
 
-// Gets the element at position p
-template <typename T>
-T* arrayGet(Array<T> a, int p)
+// Adds an element to the array, expanding its capacity if necessary
+template<typename T>
+int arrayAdd(Array<T>& a,T t)
 {
-   T* d = &a.arr[p];
-
-   return d;
+   if(a.len==a.cap)
+   {
+      arrayRedimention<T>(a);
+   }
+   add<T>(a.arr,a.len,t);
+   return a.len-1;
 }
 
-// Sets the value of the element at position p
-template <typename T>
-void arraySet(Array<T>& a, int p, T t)
+// Returns a pointer to the element at the specified position in the array
+template<typename T>
+T* arrayGet(Array<T> a,int p)
 {
-   remove<T>(a.arr,a.len,p);
-   insert<T>(a.arr,a.len,t,p);
-
+   return &a.arr[p];
 }
 
-// Inserts an element at position p
-template <typename T>
-void arrayInsert(Array<T>& a, T t, int p)
+// Sets the value of the element at the specified position in the array
+template<typename T>
+void arraySet(Array<T>& a,int p,T t)
 {
-   a.len++;
+   T* e = arrayGet<T>(a,p);
+   *e = t;
+}
+
+// Inserts an element at the specified position in the array, expanding its capacity if necessary
+template<typename T>
+void arrayInsert(Array<T>& a,T t,int p)
+{
+   if(a.len==a.cap)
+   {
+      arrayRedimention<T>(a);
+   }
    insert<T>(a.arr,a.len,t,p);
 }
 
 // Returns the size of the array
-template <typename T>
+template<typename T>
 int arraySize(Array<T> a)
 {
    return a.len;
 }
 
-// Delete the element at position p
-template <typename T>
-T arrayRemove(Array<T>& a, int p)
+// Removes and returns the element at the specified position in the array
+template<typename T>
+T arrayRemove(Array<T>& a,int p)
 {
-   a.len--;
-   return remove<T>(a.arr,a.len,p);
+   T t = remove<T>(a.arr,a.len,p);
+   return t;
 }
 
-// Remove all elements from the array
-template <typename T>
+// Removes all elements from the array
+template<typename T>
 void arrayRemoveAll(Array<T>& a)
 {
-   a.len = 0;
+   a.len=0;
 }
 
-// Search for an element in the array
-template <typename T, typename K>
-int arrayFind(Array<T> a, K k, int cmpTK(T, K))
+// Finds and returns the position of the first element that matches the specified key
+template<typename T,typename K>
+int arrayFind(Array<T> a,K k,int cmpTK(T,K))
 {
-   return find<T>(a.arr,a.len,k,cmpTK);
+   return find<T,K>(a.arr,a.len,k,cmpTK);
 }
 
-// Insert an element into the array in an orderly manner
-template <typename T>
-int arrayOrderedInsert(Array<T>& a, T t, int cmpTT(T, T))
+// Inserts an element in the array in a sorted order, expanding its capacity if necessary
+template<typename T>
+int arrayOrderedInsert(Array<T>& a,T t,int cmpTT(T,T))
 {
-   a.len++;
+   if(a.len==a.cap)
+   {
+      arrayRedimention<T>(a);
+   }
    return orderedInsert<T>(a.arr,a.len,t,cmpTT);
 }
 
-// Sort the array
-template <typename T>
-void arraySort(Array<T>& a, int cmpTT(T, T))
+// Returns a pointer to the element if it exists, otherwise adds the element to the array and returns a pointer to it
+template<typename T>
+T* arrayDiscover(Array<T>& a,T t,int cmpTT(T,T))
+{
+   int pos = arrayFind<T,T>(a,t,cmpTT);
+   if(pos<0)
+   {
+      pos = arrayAdd<T>(a,t);
+   }
+   return arrayGet<T>(a,pos);
+}
+
+// Sorts the array in place according to the specified comparison function
+template<typename T>
+void arraySort(Array<T>& a,int cmpTT(T,T))
 {
    sort<T>(a.arr,a.len,cmpTT);
 }
 
-// Searches for an element in the array and if it is not found, adds it to the end
+// Displays all elements in the array
 template <typename T>
-T* arrayDiscover(Array<T>& a, T t, int (*cmpTT)(T, T)) {
-    for (int i = 0; i < a.len; i++) {
-        if (cmpTT(a.arr[i], t) == 0) {
-            return &a.arr[i];
-        }
+void arrayDisplay(Array<T> arr)
+{
+    T* x = NULL;
+
+    for(int i = 0; i<arraySize<T>(arr);i++)
+    {
+        x = arrayGet<T>(arr,i);
+        cout << *x << endl;
     }
-    // If the element is not found, it is added to the end of the array.
-    a.len++;
-    a.arr = (T*)realloc(a.arr, a.len * sizeof(T));
-    a.arr[a.len - 1] = t;
-    return &a.arr[a.len - 1];
 }
-
-
 
 #endif
