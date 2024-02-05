@@ -6,62 +6,61 @@
 
 using namespace std;
 
-template <typename T>
+template<typename T>
 struct Queue
 {
-   T info;
-   Queue* sig;
-   int len;
-   int curr;
+   Node<T>* p;
+   Node<T>* q;
+   int cant;
 };
 
-template <typename T>
+template<typename T>
 Queue<T> queue()
 {
-   Queue<T>* q = new Queue<T>;
-   q->info = T();
-   q->sig = NULL;
-   q->len = 0;
-   q->curr = 0;
+   Queue<T> q;
+   q.p = NULL;
+   q.q = q.p;
+   q.cant = 0;
    return q;
 }
 
-// Function to add an element to the queue
-template <typename T>
-T* queueEnqueue(Queue<T>& q, T e)
+// Enqueues an element to the Queue
+template<typename T>
+T* queueEnqueue(Queue<T>& q,T e)
 {
-   q->len++;
-   return enqueue(q,e);
+   Node<T>* aux = enqueue(q.p,q.q,e);
+   q.cant++;
+   return NULL;
 }
 
-// Function to remove an element from the queue
-template <typename T>
+// Dequeues an element from the Queue
+template<typename T>
 T queueDequeue(Queue<T>& q)
 {
-   T t;
-   q->len--;
-   return dequeue(q);
+   T t = dequeue<T>(q.p,q.q);
+   q.cant--;
+   return t;
 }
 
-// Function to check if the queue is empty
-template <typename T>
+// Checks if the Queue is empty
+template<typename T>
 bool queueIsEmpty(Queue<T> q)
 {
-   return isEmpty(q);
+   return isEmpty<T>(q.p);
 }
 
-// Function to get queue size
-template <typename T>
+// Returns the size of the Queue
+template<typename T>
 int queueSize(Queue<T> q)
 {
-   int i = 0;
-   Queue<T>* aux = q;
-   while( aux!=NULL )
-   {
-      i++;
-      aux = aux->sig;
-   }
-   return i;
+   return q.cant;
+}
+
+// Displays all elements in the Queue
+template <typename T>
+void queueDisplay(Queue<T> q)
+{
+   display(q.p);
 }
 
 #endif
